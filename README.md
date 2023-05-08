@@ -1,3 +1,10 @@
+Add by @BI7JTA 
+
+How to install this code to your Pi-Star OS?
+
+https://www.bi7jta.org/wiki/index.php?title=Main_Page#Install_NextionDriver_for_Model_8.2FModel_10
+
+
 ON7LDS NextionDriver Installer and Checker
 ==========================================
 
