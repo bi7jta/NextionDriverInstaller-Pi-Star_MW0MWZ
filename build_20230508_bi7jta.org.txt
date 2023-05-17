@@ -1,0 +1,9 @@
+fixed:
+
+#define MAXGROUPS	4500
+#define MAXUSERS	400000
+
+20230517
+ NextionDriverInstaller/install.sh: line 238: /home/pi-star/NextionDriverInstaller/NextionDriver_ConvertConfig: Permission denied
+
+sudo chmod +x NextionDriverInstaller/NextionDriver_ConvertConfig;

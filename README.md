@@ -1,18 +1,7 @@
-Add by @BI7JTA 
-
-How to install this code to your Pi-Star OS?
-
-https://www.bi7jta.org/wiki/index.php?title=Main_Page#Install_NextionDriver_for_Model_8.2FModel_10
-
-
 ON7LDS NextionDriver Installer and Checker
 ==========================================
 
-This is installer version 1.06 ( 31 dec 2020 )
-
-12/2020 : warning that the display should already work + option to stop if not
-
-08/2020 : extra choices added
+This is installer version 1.04 ( 03 oct 2019 )
 
 03/2019 : changed NextionDriver config options / minor corrections
 

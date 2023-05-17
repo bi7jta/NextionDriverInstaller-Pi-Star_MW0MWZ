@@ -21,33 +21,11 @@
 #                                                       #
 #                 NextionDriver installer               #
 #                                                       #
-#                 (c)2018-2020 by ON7LDS                #
+#                 (c)2018-2019 by ON7LDS                #
 #                                                       #
-#                        V1.06                          #
+#                        V1.04                          #
 #                                                       #
 #########################################################
-
-
-checkfreespace() {
-    FREE=$(df -aPm /tmp | tail -n 1 | awk -F " " '{ print $4}')
-    if [ $FREE -lt 40 ]; then
-        echo "- ERROR : There is not enough free space in the /tmp directory."
-        echo "   Reboot to (hopefully) free up some space (Y,n) ? "
-        echo "   (after reboot, you will have to start all over with this installation !)"
-    x=""
-    while [ "$x" != "n" ]; do
-    read -n 1 x; while read -n 1 -t .1 y; do x="$x$y"; done
-#        echo -n "[$x]"
-        if [ "$x" = "" ];  then reboot; fi
-        if [ "$x" = "y" ]; then reboot; fi
-        if [ "$x" = "Y" ]; then reboot; fi
-        if [ "$x" = "N" ]; then x="n"; fi
-    done
-    echo -e "\n\n+ OK, not rebooting. Trying to install anyway.\n\n"
-    echo -e " WARNING : Installing this way will probably fail !!!\n\n"
-    fi
-}
-
 
 if [ "$(which gcc)" = "" ]; then echo "- I need gcc. Please install it." exit; fi
 if [ "$(which git)" = "" ]; then echo "- I need git. Please install it." exit; fi
@@ -58,45 +36,13 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-
-
-echo "#######################################################################"
-echo " This is the NextionDriver installer."
-echo ""
-echo " This installer will install the Nexiondriver"
-echo "  in an already working MMDVMHost configuration"
-echo "  with a WORKING Nextion display."
-echo " It uses the current configuration to ADD the NextionDriver."
-echo ""
-echo " So yes, your Nextion should already work."
-echo "  Not with all the fields filling, but it should already be configured."
-echo "  If not, this installer cannot magically make it work !"
-echo ""
-echo " If your Nextion display is not yet configured and working,"
-echo "  you should stop here and do that first."
-echo ""
-echo "#######################################################################"
-echo ""
-echo -n " Continue installing (Y,n) ? "
-
-    x="Y"
-    while [ "$x" != "y" ]; do
-    read -n 1 x; while read -n 1 -t .1 y; do x="$x$y"; done
-#        echo -n "[$x]"
-        if [ "$x" = "" ];  then x="y"; fi
-        if [ "$x" = "Y" ]; then x="y"; fi
-        if [ "$x" = "n" ]; then echo ""; exit; fi
-        if [ "$x" = "N" ]; then echo ""; exit; fi
-    done
-    echo -e "\n\n+ OK, continuing ...\n\n"
-
-checkfreespace
 echo "+ Getting NextionDriver ..."
-cd /tmp
-rm -rf /tmp/NextionDriver
-git clone https://github.com/on7lds/NextionDriver.git;
-cd /tmp/NextionDriver 2>/dev/null
-if [ "$(pwd)" != "/tmp/NextionDriver" ]; then echo "- Getting NextionDriver failed. Cannot continue."; exit; fi
+#cd /tmp
+#rm -rf /tmp/NextionDriver
+#git clone https://github.com/on7lds/NextionDriver.git;
+cd /home/pi-star/NextionDriver 2>/dev/null
+pwd
+if [ "$(pwd)" != "/home/pi-star/NextionDriver" ]; then echo "- Getting NextionDriver failed. Cannot continue."; exit; fi
 
 
 #######################################################################################
@@ -152,33 +98,32 @@ checkversion () {
     exit
     fi
 }
-
 helpfiles () {
     rm -f /etc/groups.txt
     rm -f /etc/stripped.csv
     echo "+ Copying groups and users files"
-    wget --no-check-certificate "https://api.brandmeister.network/v1.0/groups/" -O /tmp/groups.txt
+    wget "https://api.brandmeister.network/v1.0/groups/" -O /tmp/groups.txt
     if [ $? -eq 0 ]; then cp /tmp/groups.txt $DIR/groups.txt; fi
     cp $DIR/groups.txt $FILESDIR
     cp $DIR/stripped.csv $FILESDIR
 }
 herstart () {
-    echo -e "\n+ To test if it all works as expected,"
-    echo -n "+  we will reboot this hotspot, OK (Y,n) ? "
-    x=""
-    while [ "$x" != "n" ]; do
-    read -n 1 x; while read -n 1 -t .1 y; do x="$x$y"; done
+    #echo -e "\n+ To test if it all works as expected,"
+    #echo -n "+  we will reboot this hotspot, OK (Y,n) ? "
+    echo   "\n+ To test if it all works as expected,"
+    echo   "+  we will reboot this hotspot...  "
+    x="Y"
+    #while [ "$x" != "n" ]; do
+    #read -n 1 x; while read -n 1 -t .1 y; do x="$x$y"; done
 #        echo -n "[$x]"
-        if [ "$x" = "" ];  then reboot; fi
+#        if [ "$x" = "" ];  then reboot; fi
         if [ "$x" = "y" ]; then reboot; fi
         if [ "$x" = "Y" ]; then reboot; fi
-        if [ "$x" = "N" ]; then x="n"; fi
-    done
-    echo -e "\n\n+ OK, not rebooting. Trying to start mmdvmhost.\n\n"
-    $SYSTEMCTL
-    $MMDVMSTART
-    #free up /tmp
-    rm -rf /tmp/NextionDriver*
+#        if [ "$x" = "N" ]; then x="n"; fi
+#    done
+#    echo -e "\n\n+ OK, not rebooting. Trying to start mmdvmhost.\n\n"
+#    $SYSTEMCTL
+#    $MMDVMSTART
 }
 
 
@@ -290,6 +235,7 @@ if [ "$ND" = "" ]; then
     echo -e "+ NextionDriver installed\n"
     echo -e "+ -----------------------------------------------"
     echo -e "+ We will now start the configuration program ...\n"
+    chmod +x $DIR/NextionDriver_ConvertConfig;
     $DIR/NextionDriver_ConvertConfig $CONFIGDIR$CONFIGFILE
     herstart
     exit
