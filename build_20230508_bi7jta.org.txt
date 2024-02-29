@@ -7,3 +7,12 @@ fixed:
  NextionDriverInstaller/install.sh: line 238: /home/pi-star/NextionDriverInstaller/NextionDriver_ConvertConfig: Permission denied
 
 sudo chmod +x NextionDriverInstaller/NextionDriver_ConvertConfig;
+
+2024.01.24
+
+NextionDriver.service add:
+
+Restart=on-failure
+RestartSec=5s
+
+ 

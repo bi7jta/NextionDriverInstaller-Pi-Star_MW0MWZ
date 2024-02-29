@@ -10,6 +10,8 @@ Type=forking
 WorkingDirectory=/usr/local/etc/
 ExecStart=/usr/local/bin/NextionDriver -c /etc/mmdvmhost -i
 ExecStop=/usr/bin/killall NextionDriver
+Restart=on-failure
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target

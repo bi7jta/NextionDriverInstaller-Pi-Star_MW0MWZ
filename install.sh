@@ -111,8 +111,9 @@ herstart () {
     #echo -e "\n+ To test if it all works as expected,"
     #echo -n "+  we will reboot this hotspot, OK (Y,n) ? "
     echo   "\n+ To test if it all works as expected,"
-    echo   "+  we will reboot this hotspot...  "
+    echo   "+  we will reboot this hotspot after 10s...  "
     x="Y"
+    sleep 10
     #while [ "$x" != "n" ]; do
     #read -n 1 x; while read -n 1 -t .1 y; do x="$x$y"; done
 #        echo -n "[$x]"

@@ -23,7 +23,7 @@ rpi-rw;
 cd /home/pi-star;
 # Download and unzip the driver
 sudo wget https://www.bi7jta.org/files/MMDVM_Nextion/Driver/on7lds-NextionDriverInstaller-Offline.zip;   
-sudo unzip on7lds-NextionDriverInstaller-Offline.zip;
+sudo unzip -o on7lds-NextionDriverInstaller-Offline.zip;
 
 # install Driver 
 sudo chmod +x NextionDriverInstaller/install.sh;
